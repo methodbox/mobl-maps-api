@@ -1,7 +1,8 @@
 import * as express from 'express';
 import { Express, Request, Response } from 'express-serve-static-core';
-import fetch from 'node-fetch';
 import * as queryString from 'querystring';
+import fetch from 'node-fetch';
+
 const app: Express = express();
 const apiKey: string = '';
 
@@ -12,7 +13,7 @@ app.get(
     const stringQuery: string = queryString.stringify(req.query);
 
     fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
-      .then(res => res.json())
+      .then(mapRes => mapRes.json())
       .then(json => {
         return res.send(json);
       })
