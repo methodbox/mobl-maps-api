@@ -1,11 +1,20 @@
 import * as express from 'express';
-import bodyParser = require('body-parser');
-import url = require('url');
-import querystring = require('querystring');
-const Article = require('./models').Article;
+import fetch from 'node-fetch';
+import * as queryString from 'querystring';
+const app = express();
+const apiKey = '';
 
 app.get('/', (req, res) => {
-  console.log(req.query);
+  req.query.key = apiKey;
+  const stringQuery = queryString.stringify(req.query);
+
+  console.log(stringQuery);
+
+  fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
+    .then(res => res.json())
+    .then(json => {
+      return res.send(json);
+    });
 });
 
-app.listen(8080);
+app.listen(5000);
