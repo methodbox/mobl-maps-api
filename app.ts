@@ -1,20 +1,23 @@
 import * as express from 'express';
+import { Express, Request, Response } from 'express-serve-static-core';
 import fetch from 'node-fetch';
 import * as queryString from 'querystring';
-const app = express();
-const apiKey = '';
+const app: Express = express();
+const apiKey: string = '';
 
-app.get('/', (req, res) => {
-  req.query.key = apiKey;
-  const stringQuery = queryString.stringify(req.query);
+app.get(
+  '/',
+  (req: Request, res: Response): void => {
+    req.query.key = apiKey;
+    const stringQuery: string = queryString.stringify(req.query);
 
-  console.log(stringQuery);
-
-  fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
-    .then(res => res.json())
-    .then(json => {
-      return res.send(json);
-    });
-});
+    fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
+      .then(res => res.json())
+      .then(json => {
+        return res.send(json);
+      })
+      .catch(err => console.log(err));
+  }
+);
 
 app.listen(5000);
