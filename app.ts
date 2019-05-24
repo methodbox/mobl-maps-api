@@ -4,14 +4,15 @@ import * as queryString from 'querystring';
 import fetch from 'node-fetch';
 
 const app: Express = express();
+const apiKey: string = '';
 
 app.get(
   '/',
   (req: Request, res: Response): void => {
-    const apiKey: string = req.query.key;
-    const query: string = queryString.stringify(req.query);
+    req.query.key = apiKey;
+    const stringQuery: string = queryString.stringify(req.query);
 
-    fetch(`https://maps.googleapis.com/maps/api/directions/json?${query}${apiKey}`)
+    fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
       .then(mapRes => mapRes.json())
       .then(json => {
         return res.send(json);
