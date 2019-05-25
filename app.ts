@@ -9,9 +9,7 @@ const apiKey: string = '';
 app.get(
   '/',
   (req: Request, res: Response): void => {
-    req.query.key = apiKey;
     const stringQuery: string = queryString.stringify(req.query);
-
     fetch(`https://maps.googleapis.com/maps/api/directions/json?${stringQuery}${apiKey}`)
       .then(mapRes => mapRes.json())
       .then(json => {
